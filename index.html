@@ -1,0 +1,3471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Complete Beginner Guide - Plumber Automation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            padding: 1%;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 16px 1%;
+            border-radius: 12px;
+            margin-bottom: 1%;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header .subtitle {
+            font-size: 12px;
+            color: #bfdbfe;
+            margin-top: 6px;
+        }
+
+        .progress-bar {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 20px;
+            height: 8px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .time-estimate {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            padding: 12px 1%;
+            border-radius: 10px;
+            margin-bottom: 1%;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 1%;
+            margin-bottom: 1%;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-time {
+            font-size: 11px;
+            color: #f59e0b;
+            font-weight: 600;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid #475569;
+            border-radius: 10px;
+            padding: 14px 1%;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .step-card.completed {
+            border-color: #10b981;
+            opacity: 0.7;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #fff;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-number.done {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .step-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #f1f5f9;
+            flex: 1;
+        }
+
+        .step-content {
+            font-size: 12px;
+            color: #cbd5e1;
+            margin-left: 42px;
+            line-height: 1.7;
+        }
+
+        .click-instruction {
+            background: rgba(59, 130, 246, 0.15);
+            border-left: 3px solid #3b82f6;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .click-instruction strong {
+            color: #60a5fa;
+        }
+
+        .screenshot-placeholder {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px dashed #475569;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            text-align: center;
+            color: #64748b;
+            font-size: 11px;
+        }
+
+        .screenshot-placeholder::before {
+            content: "📸 ";
+            font-size: 24px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .warning {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid #ef4444;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #fca5a5;
+        }
+
+        .tip {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #6ee7b7;
+        }
+
+        .important {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 3px solid #f59e0b;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #fcd34d;
+        }
+
+        .code-block {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #10b981;
+            overflow-x: auto;
+        }
+
+        .input-example {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid #3b82f6;
+            padding: 8px;
+            border-radius: 6px;
+            margin: 6px 0;
+            font-size: 11px;
+            color: #93c5fd;
+        }
+
+        .checklist {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 12px;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            padding-left: 8px;
+            border-radius: 6px;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #475569;
+            border-radius: 4px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox.checked {
+            background: #10b981;
+            border-color: #10b981;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin: 6px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:active {
+            transform: translateY(2px);
+        }
+
+        .action-btn.complete {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1%;
+            margin-top: 12px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: rgba(71, 85, 105, 0.3);
+            border: 1px solid #475569;
+            padding: 12px;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:active {
+            background: rgba(59, 130, 246, 0.3);
+        }
+
+        .day-label {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .cost-tag {
+            background: rgba(16, 185, 129, 0.2);
+            color: #6ee7b7;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        .trouble-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+
+        .trouble-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #fca5a5;
+            margin-bottom: 6px;
+        }
+
+        .trouble-solution {
+            font-size: 11px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎓 Complete Beginner's Guide</h1>
+        <div class="subtitle">Zero Experience Required - Plumber AI Automation Setup</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="time-estimate">
+        ⏱️ Total Time: 8-10 hours over 1 weekend | Cost: $150 setup + $50-150/month
+    </div>
+
+    <!-- DAY 1: ACCOUNTS SETUP -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">DAY 1 - SATURDAY MORNING</div>
+                <div>📝 Part 1: Create All Accounts</div>
+            </div>
+            <div class="section-time">⏱️ 2-3 hours</div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div class="step-title">Create Zapier Account <span class="cost-tag">$20/month</span></div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open your web browser (Chrome, Safari, Firefox)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Type in address bar: <span style="color: #60a5fa;">zapier.com</span> and press Enter
+                </div>
+                <div class="screenshot-placeholder">
+                    You'll see Zapier homepage with "Sign Up" button in top-right corner
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click the blue <strong>"Sign Up"</strong> button (top-right corner)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> You'll see 3 options to sign up. Choose one:
+                    <ul style="margin-top: 6px; margin-left: 20px;">
+                        <li>Click "Continue with Google" (easiest - uses your Gmail)</li>
+                        <li>OR click "Continue with Microsoft"</li>
+                        <li>OR type your email + create password, click "Sign Up"</li>
+                    </ul>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Check your email inbox. You'll get email from Zapier titled "Verify your email"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Open that email and click <strong>"Verify Email Address"</strong> button
+                </div>
+                <div class="screenshot-placeholder">
+                    After clicking, you'll be taken to Zapier dashboard - looks like a white page with menu on left
+                </div>
+                <div class="important">
+                    📌 <strong>Important:</strong> You're now on FREE plan (100 tasks/month). We'll upgrade later after we test everything.
+                </div>
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Zapier account created and email verified</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>I can see the Zapier dashboard (menu on left side)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div class="step-title">Create Twilio Account (SMS & Phone) <span class="cost-tag">$15/mo + usage</span></div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open new browser tab, type: <span style="color: #60a5fa;">twilio.com/try-twilio</span>
+                </div>
+                <div class="screenshot-placeholder">
+                    You'll see signup form with fields: First Name, Last Name, Email, Password
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Fill in the form:
+                </div>
+                <div class="input-example">
+                    First name: [Your first name]<br>
+                    Last name: [Your last name]<br>
+                    Email: [Your email]<br>
+                    Password: [Create strong password - save it!]
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Check the box "I'm not a robot"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click red <strong>"Start your free trial"</strong> button
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Check your email - Twilio sends verification code
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Copy the 6-digit code from email, paste it into Twilio page, click "Verify"
+                </div>
+                <div class="screenshot-placeholder">
+                    You'll see "Welcome to Twilio" page asking questions
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Answer the questions:
+                </div>
+                <div class="input-example">
+                    Which Twilio product? → Select "SMS"<br>
+                    What do you plan to build? → Select "Alerts & Notifications"<br>
+                    How do you want to build? → Select "With no code tools"<br>
+                    What's your preferred language? → Select "I'm not a developer"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Click <strong>"Get Started with Twilio"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Twilio asks for phone number to verify YOU are real person
+                </div>
+                <div class="input-example">
+                    Enter your mobile number: +1-XXX-XXX-XXXX<br>
+                    Click "Verify"<br>
+                    You'll receive SMS with code<br>
+                    Enter code, click "Submit"
+                </div>
+                <div class="screenshot-placeholder">
+                    Now you're in Twilio Console - looks like dashboard with graphs and menu on left
+                </div>
+                
+                <div class="important">
+                    📌 <strong>CRITICAL - Save These 3 Things NOW:</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> On Twilio Console homepage, you'll see box called "Account Info"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 11:</strong> Open Notes app on your phone/computer and copy these:
+                </div>
+                <div class="code-block">
+Account SID: AC12345678901234567890 (starts with "AC")
+Auth Token: Click the eye icon 👁️ to reveal, copy it
+(looks like: 1a2b3c4d5e6f7g8h9i0j1k2l)
+                </div>
+                <div class="warning">
+                    ⚠️ <strong>NEVER share Auth Token with anyone!</strong> It's like your bank password.
+                </div>
+
+                <div class="click-instruction">
+                    <strong>STEP 12:</strong> Now buy a phone number:
+                </div>
+                <div class="click-instruction">
+                    <strong>→</strong> Look at left menu, click <strong>"# Phone Numbers"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>→</strong> Click <strong>"Buy a number"</strong> button (big blue button)
+                </div>
+                <div class="screenshot-placeholder">
+                    You'll see "Buy a Number" page with search options
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 13:</strong> Configure your number:
+                </div>
+                <div class="input-example">
+                    Country: United States<br>
+                    Capabilities: Check ✅ "SMS" and ✅ "Voice"<br>
+                    (Leave other boxes unchecked)<br>
+                    Click "Search"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 14:</strong> You'll see list of available phone numbers. Pick one and click <strong>"Buy"</strong>
+                </div>
+                <div class="input-example">
+                    Cost: $15.00/month (they show this before you buy)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 15:</strong> Click <strong>"Buy [phone number]"</strong> to confirm
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 16:</strong> Enter credit card info when asked (required to activate)
+                </div>
+                <div class="important">
+                    📌 Your Twilio number is now active! Save this number in your Notes:
+                </div>
+                <div class="code-block">
+My Twilio Number: +1-XXX-XXX-XXXX
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Twilio account created and phone verified</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Saved Account SID and Auth Token in Notes app</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Bought phone number ($15/mo) and saved it</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div class="step-title">Create OpenAI Account (AI Brain) <span class="cost-tag">$10-30/month</span></div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open new tab, type: <span style="color: #60a5fa;">platform.openai.com/signup</span>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click <strong>"Sign up"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Choose signup method (easiest = "Continue with Google")
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Fill in: Name, Birthday, click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Verify phone number (they'll send SMS code)
+                </div>
+                <div class="screenshot-placeholder">
+                    After verification, you'll see OpenAI Platform dashboard
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Look at top-right corner, click your profile picture/name
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> In dropdown menu, click <strong>"View API keys"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Click green button <strong>"+ Create new secret key"</strong>
+                </div>
+                <div class="input-example">
+                    Name: Plumber Automation<br>
+                    Permissions: "All" (default)<br>
+                    Click "Create secret key"
+                </div>
+                <div class="screenshot-placeholder">
+                    A popup appears with your API key - LONG string starting with "sk-proj-"
+                </div>
+                <div class="warning">
+                    ⚠️ <strong>CRITICAL:</strong> This key shows ONLY ONCE! Copy it NOW!
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click <strong>"Copy"</strong> button, paste into your Notes app
+                </div>
+                <div class="code-block">
+OpenAI API Key: sk-proj-abc123xyz789...
+(Very long string, keep it safe!)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> Click <strong>"Done"</strong>
+                </div>
+                
+                <div class="important">
+                    📌 <strong>Add Payment Method:</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 11:</strong> On left menu, click <strong>"Settings"</strong> → <strong>"Billing"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 12:</strong> Click <strong>"Add payment method"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 13:</strong> Enter credit card, click <strong>"Add"</strong>
+                </div>
+                <div class="tip">
+                    💡 OpenAI charges only for what you use. Typical cost: $10-30/month for small business.
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>OpenAI account created and phone verified</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>API key created and saved in Notes app</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Payment method added to billing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <div class="step-title">Create Google Sheet (Free CRM)</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open new tab, type: <span style="color: #60a5fa;">sheets.google.com</span>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click <strong>"+ Blank"</strong> (creates new empty spreadsheet)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click "Untitled spreadsheet" at top-left
+                </div>
+                <div class="input-example">
+                    Rename to: Plumber Leads CRM
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> In cell A1, type: <strong>Lead Name</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Press Tab key (moves to cell B1), type: <strong>Phone</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Continue pressing Tab and typing these headers:
+                </div>
+                <div class="code-block">
+A1: Lead Name
+B1: Phone
+C1: Email
+D1: Service Type
+E1: Date Added
+F1: Status
+G1: Last Contact
+H1: Notes
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Select row 1 (click the "1" on left side)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Click <strong>"Format"</strong> in top menu
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click <strong>"Text wrapping"</strong> → <strong>"Wrap"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> With row 1 still selected, click Bold button (B) in toolbar
+                </div>
+                <div class="tip">
+                    💡 Your CRM is ready! Zapier will automatically add leads to row 2, 3, 4, etc.
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Created Google Sheet named "Plumber Leads CRM"</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Added all 8 column headers (Lead Name to Notes)</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Made header row bold</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <div class="step-title">Create Google Form (Lead Capture)</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open new tab, type: <span style="color: #60a5fa;">forms.google.com</span>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click <strong>"+ Blank"</strong> form
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click "Untitled form", rename to: <strong>Request Service</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Add first question:
+                </div>
+                <div class="input-example">
+                    Question text: Your Name<br>
+                    Question type: Short answer<br>
+                    Toggle "Required" ON (bottom right)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click ➕ button on right to add new question
+                </div>
+                <div class="input-example">
+                    Question: Your Phone Number<br>
+                    Type: Short answer<br>
+                    Required: ON
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Add third question:
+                </div>
+                <div class="input-example">
+                    Question: Your Email<br>
+                    Type: Short answer<br>
+                    Required: OFF
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Add fourth question:
+                </div>
+                <div class="input-example">
+                    Question: What service do you need?<br>
+                    Type: Multiple choice<br>
+                    Options:<br>
+                    • Emergency Repair<br>
+                    • Leak Repair<br>
+                    • Installation<br>
+                    • Drain Cleaning<br>
+                    • Other<br>
+                    Required: ON
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Add fifth question:
+                </div>
+                <div class="input-example">
+                    Question: Describe the issue<br>
+                    Type: Paragraph<br>
+                    Required: OFF
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click "Settings" (gear icon, top-right)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> Under "Responses", check ✅ "Collect email addresses"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 11:</strong> Click "Send" button (top-right)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 12:</strong> Click link icon 🔗, click "Copy"
+                </div>
+                <div class="important">
+                    📌 Save this link - you'll add it to your website!
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Created Google Form with 5 questions</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Saved form link for website</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(1)">✅ COMPLETE DAY 1 - All Accounts Created!</button>
+    </div>
+
+    <!-- DAY 2: CONNECT APPS -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">DAY 1 - SATURDAY AFTERNOON</div>
+                <div>🔌 Part 2: Connect Apps to Zapier</div>
+            </div>
+            <div class="section-time">⏱️ 1 hour</div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <div class="step-title">Connect Twilio to Zapier</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Go back to Zapier tab (zapier.com dashboard)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> On left menu, click <strong>"Apps"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> In search box, type: <strong>Twilio</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click on "Twilio SMS" (has Twilio logo)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click <strong>"Add Connection"</strong> button
+                </div>
+                <div class="screenshot-placeholder">
+                    Popup appears asking for Account SID and Auth Token
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Open your Notes app where you saved Twilio info
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Copy your Account SID, paste into first field
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Copy your Auth Token, paste into second field
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click <strong>"Yes, Continue to Twilio SMS"</strong>
+                </div>
+                <div class="tip">
+                    💡 Green checkmark means Twilio is connected!
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Twilio SMS connected to Zapier</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">7</div>
+                <div class="step-title">Connect OpenAI to Zapier</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> On Zapier, click "Apps" again
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Search for: <strong>OpenAI</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click "OpenAI (ChatGPT)"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click <strong>"Add Connection"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> From your Notes, copy your OpenAI API key (starts with sk-proj-)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Paste into "API Key" field
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click <strong>"Yes, Continue to OpenAI"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>OpenAI connected to Zapier</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">8</div>
+                <div class="step-title">Connect Google Sheets to Zapier</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> On Zapier Apps page, search: <strong>Google Sheets</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click "Google Sheets"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click <strong>"Add Connection"</strong>
+                </div>
+                <div class="screenshot-placeholder">
+                    Popup: "Sign in with Google"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Select your Google account (same one with your spreadsheet)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click <strong>"Allow"</strong> when asked for permissions
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Google Sheets connected to Zapier</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">9</div>
+                <div class="step-title">Connect Google Forms to Zapier</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Search: <strong>Google Forms</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click <strong>"Add Connection"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Sign in with Google, click <strong>"Allow"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Google Forms connected to Zapier</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(2)">✅ All Apps Connected!</button>
+    </div>
+
+    <!-- DAY 3: BUILD FIRST WORKFLOW -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">DAY 2 - SUNDAY MORNING</div>
+                <div>⚡ Part 3: Build Your First Automation</div>
+            </div>
+            <div class="section-time">⏱️ 2-3 hours</div>
+        </div>
+
+        <div class="tip" style="margin-bottom: 12px;">
+            💡 <strong>What we're building:</strong> When someone fills your form → They get instant SMS → Lead added to your spreadsheet
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">10</div>
+                <div class="step-title">Create Your First Zap</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Go to Zapier dashboard
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click orange <strong>"+ Create"</strong> button (top-left or center)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click <strong>"Zaps"</strong> from dropdown
+                </div>
+                <div class="screenshot-placeholder">
+                    You'll see Zap editor - looks like: "Trigger" box → arrow → "Action" box
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> In search box under "Trigger", type: <strong>Google Forms</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click "Google Forms" from results
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Under "Event", select <strong>"New Response in Spreadsheet"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Under "Account", select your Google account (shows your email)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> Choose form:
+                </div>
+                <div class="input-example">
+                    Drive: My Drive<br>
+                    Spreadsheet: [Find "Request Service (Responses)"]<br>
+                    Worksheet: Form Responses 1
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 11:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="important">
+                    📌 <strong>Test the trigger:</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 12:</strong> Click <strong>"Test trigger"</strong> button
+                </div>
+                <div class="warning">
+                    ⚠️ <strong>If error "No data found":</strong> Open your form in another tab, submit a test response with fake data, then click "Test trigger" again
+                </div>
+                <div class="screenshot-placeholder">
+                    You'll see sample data from your form (name, phone, etc.)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 13:</strong> Click <strong>"Continue with selected record"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Trigger set up and tested successfully</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">11</div>
+                <div class="step-title">Add Action: Save to Google Sheets</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click ➕ icon below the trigger box
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Search: <strong>Google Sheets</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click "Google Sheets"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Event: Select <strong>"Create Spreadsheet Row"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Account: Select your Google account
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Configure spreadsheet:
+                </div>
+                <div class="input-example">
+                    Drive: My Drive<br>
+                    Spreadsheet: Plumber Leads CRM<br>
+                    Worksheet: Sheet1
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Now map the columns. You'll see fields like "Lead Name", "Phone", etc.
+                </div>
+                <div class="important">
+                    📌 <strong>This is the MOST IMPORTANT part - mapping data!</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> Click in "Lead Name" field
+                </div>
+                <div class="screenshot-placeholder">
+                    Dropdown shows: "2. Your Name" (from your form)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 11:</strong> Click "2. Your Name" to insert it
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 12:</strong> Click in "Phone" field, select "3. Your Phone Number"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 13:</strong> Click in "Email" field, select "4. Your Email"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 14:</strong> Click in "Service Type" field, select "5. What service do you need?"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 15:</strong> Click in "Date Added" field
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 16:</strong> In search box, type: <strong>now</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 17:</strong> Select "1. Timestamp" (this adds current date/time automatically)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 18:</strong> Click in "Status" field, manually type: <strong>New Lead</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 19:</strong> Leave "Last Contact" and "Notes" empty
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 20:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 21:</strong> Click <strong>"Test step"</strong>
+                </div>
+                <div class="screenshot-placeholder">
+                    Success! Check your Google Sheet - you'll see a new row with data
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 22:</strong> Open your Google Sheet to verify the data appeared
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Google Sheets action added and tested</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Verified new row appeared in my spreadsheet</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">12</div>
+                <div class="step-title">Add Action: Send SMS with Twilio</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click ➕ below Google Sheets action
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Search: <strong>Twilio</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click "Twilio"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Event: Select <strong>"Send SMS"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Account: Select your Twilio account
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Configure SMS:
+                </div>
+                <div class="important">
+                    📌 <strong>"From Number" = Your Twilio number</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click "From Number" dropdown
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> Select your Twilio phone number (the one you bought)
+                </div>
+                <div class="important">
+                    📌 <strong>"To Number" = Customer's phone from form</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 11:</strong> Click in "To" field
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 12:</strong> In dropdown, find and click "3. Your Phone Number"
+                </div>
+                <div class="important">
+                    📌 <strong>Now write your message:</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 13:</strong> Click in "Message" field (big text box)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 14:</strong> Type this message (you can customize):
+                </div>
+                <div class="input-example">
+Hi [Click here and select "2. Your Name" from dropdown]! 
+
+Thanks for contacting [Your Business Name]. We received your request for [click and select "5. What service do you need?"].
+
+We'll call you within 30 minutes to discuss your project.
+
+- [Your Name]
+[Your Phone Number]
+                </div>
+                <div class="tip">
+                    💡 <strong>Important:</strong> Keep SMS under 160 characters to avoid extra charges, or split into 2 messages.
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 15:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 16:</strong> Click <strong>"Test step"</strong>
+                </div>
+                <div class="warning">
+                    ⚠️ <strong>This will send REAL SMS to the test phone number!</strong> Check your phone or the test number.
+                </div>
+                <div class="screenshot-placeholder">
+                    Success message appears. Check the phone - SMS should arrive within seconds.
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>SMS action configured with my Twilio number</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Tested and received SMS on phone</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">13</div>
+                <div class="step-title">Publish Your Zap!</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> At top of Zap editor, click "Untitled Zap"
+                </div>
+                <div class="input-example">
+                    Rename to: Lead Response Automation
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click <strong>"Publish"</strong> button (top-right, big blue button)
+                </div>
+                <div class="screenshot-placeholder">
+                    Zap is now LIVE! Every form submission will trigger this automation.
+                </div>
+                <div class="important">
+                    🎉 <strong>Congratulations!</strong> Your first automation is running!
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Zap renamed and published</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Zap shows "On" status</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(3)">🎉 FIRST AUTOMATION LIVE!</button>
+    </div>
+
+    <!-- TESTING SECTION -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">DAY 2 - SUNDAY AFTERNOON</div>
+                <div>🧪 Part 4: Test Everything</div>
+            </div>
+            <div class="section-time">⏱️ 30 minutes</div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">14</div>
+                <div class="step-title">Do a Real-World Test</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open your Google Form link (the one you saved earlier)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Fill it out with REAL test data:
+                </div>
+                <div class="input-example">
+                    Name: Test Customer<br>
+                    Phone: [YOUR cell phone or a friend's - must be real!]<br>
+                    Email: test@example.com<br>
+                    Service: Emergency Repair<br>
+                    Description: Testing my automation system
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click <strong>"Submit"</strong>
+                </div>
+                <div class="important">
+                    📌 <strong>Wait 10-30 seconds... Magic happens:</strong>
+                </div>
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>✅ SMS received on phone (within 30 seconds)</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>✅ New row appeared in Google Sheet</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>✅ All data is correct (name, phone, service, etc.)</span>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    💡 <strong>If everything worked - YOU DID IT!</strong> You have a working automation!
+                </div>
+
+                <div class="trouble-box" style="margin-top: 20px;">
+                    <div class="trouble-title">🚨 Troubleshooting: What if it didn't work?</div>
+                    <div class="trouble-solution">
+                        <strong>Problem: No SMS received</strong><br>
+                        → Go to Zapier → Click "Zap History" (left menu)<br>
+                        → Check if Zap ran (shows timestamp)<br>
+                        → If error shows, click it to see details<br>
+                        → Common fix: Wrong phone number format. Use +1-XXX-XXX-XXXX<br><br>
+                        
+                        <strong>Problem: No row in Google Sheet</strong><br>
+                        → Check if Zap shows "On" (not paused)<br>
+                        → Make sure you selected correct spreadsheet in Zap setup<br>
+                        → Try turning Zap off and back on<br><br>
+                        
+                        <strong>Problem: SMS has wrong info</strong><br>
+                        → Edit your Zap<br>
+                        → Check that you mapped correct form fields to message<br>
+                        → Re-test the step
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(4)">✅ Testing Complete - System Works!</button>
+    </div>
+
+    <!-- AUTOMATION 2: APPOINTMENT REMINDERS -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">DAY 2 - SUNDAY AFTERNOON</div>
+                <div>📅 Part 5: Appointment Reminder Automation</div>
+            </div>
+            <div class="section-time">⏱️ 1.5 hours</div>
+        </div>
+
+        <div class="tip" style="margin-bottom: 12px;">
+            💡 <strong>What we're building:</strong> When you add appointment to Google Calendar → Customer gets SMS 24 hours before → Final SMS 2 hours before
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">15</div>
+                <div class="step-title">Set Up Google Calendar</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open new tab, go to: <span style="color: #60a5fa;">calendar.google.com</span>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Create a test appointment to use later:
+                </div>
+                <div class="click-instruction">
+                    <strong>→</strong> Click on tomorrow's date
+                </div>
+                <div class="click-instruction">
+                    <strong>→</strong> Click <strong>"Create"</strong>
+                </div>
+                <div class="input-example">
+                    Title: Test Job - John Smith<br>
+                    Date: Tomorrow<br>
+                    Time: 2:00 PM - 3:00 PM<br>
+                    Location: 123 Main St<br>
+                    Description: Leak repair - add customer phone: +1-555-123-4567
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click <strong>"Save"</strong>
+                </div>
+                <div class="important">
+                    📌 <strong>Important Format:</strong> Always include customer phone in description as: +1-XXX-XXX-XXXX
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Test appointment created in Google Calendar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">16</div>
+                <div class="step-title">Connect Google Calendar to Zapier</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Go back to Zapier dashboard
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click "Apps" (left menu)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Search: <strong>Google Calendar</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click "Google Calendar"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click <strong>"Add Connection"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Sign in with Google, click <strong>"Allow"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Google Calendar connected to Zapier</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">17</div>
+                <div class="step-title">Create Appointment Reminder Zap</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click <strong>"+ Create"</strong> → <strong>"Zaps"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Search trigger: <strong>Google Calendar</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Event: Select <strong>"Event Start"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Account: Select your Google account
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="important">
+                    📌 <strong>Critical Setting: Time Before</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Configure trigger:
+                </div>
+                <div class="input-example">
+                    Calendar: [Your main calendar]<br>
+                    Time Before: 1 day (this triggers 24 hours before appointment)<br>
+                    Search term: (leave blank to get ALL appointments)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click <strong>"Test trigger"</strong>
+                </div>
+                <div class="screenshot-placeholder">
+                    You should see your test appointment data
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> Click <strong>"Continue with selected record"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Calendar trigger configured for 24hrs before</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">18</div>
+                <div class="step-title">Extract Phone Number from Description</div>
+            </div>
+            <div class="step-content">
+                <div class="important">
+                    📌 We need to extract the phone number from the event description
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click ➕ to add action
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Search: <strong>Formatter by Zapier</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click "Formatter by Zapier"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Event: Select <strong>"Text"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Transform: Select <strong>"Extract Phone Number"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click in "Input" field
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Select <strong>"1. Description"</strong> from dropdown
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> Click <strong>"Test step"</strong>
+                </div>
+                <div class="screenshot-placeholder">
+                    Should show extracted phone number: +1-555-123-4567
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Phone extraction tested successfully</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">19</div>
+                <div class="step-title">Send 24-Hour Reminder SMS</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click ➕ to add action
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Search: <strong>Twilio</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Event: <strong>"Send SMS"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Configure SMS:
+                </div>
+                <div class="input-example">
+                    From Number: [Your Twilio number]<br>
+                    To: Click and select "2. Output" (the extracted phone)<br>
+                    Message: Type below ↓
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Click in Message field and compose:
+                </div>
+                <div class="input-example">
+Reminder: [Your Business Name] appointment tomorrow!
+
+Date: [Click dropdown, select "1. Start Date Pretty"]
+Time: [Click dropdown, select "1. Start Time Pretty"]
+Location: [Click dropdown, select "1. Location"]
+
+Reply YES to confirm or CANCEL to reschedule.
+
+See you soon!
+[Your Name]
+[Your Phone]
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Click <strong>"Test step"</strong>
+                </div>
+                <div class="warning">
+                    ⚠️ This sends REAL SMS to the number in your test appointment!
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>24-hour reminder SMS tested</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">20</div>
+                <div class="step-title">Add 2-Hour Final Reminder</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click ➕ to add action
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Search: <strong>Delay by Zapier</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Event: Select <strong>"Delay Until"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Configure delay:
+                </div>
+                <div class="input-example">
+                    Delay Until: [Click dropdown, select "1. Start"]<br>
+                    Time Zone: [Select your timezone]<br>
+                    Offset value: -2<br>
+                    Offset unit: Hours
+                </div>
+                <div class="tip">
+                    💡 This delays until 2 hours BEFORE the appointment (negative offset)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click ➕ to add final SMS action
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Add Twilio SMS (same as before)
+                </div>
+                <div class="input-example">
+From: [Your Twilio number]<br>
+To: [Select "2. Output" from phone extraction step]<br>
+Message: 
+
+Your [Your Business Name] appointment is in 2 hours!
+
+Time: [Select "1. Start Time Pretty"]
+Location: [Select "1. Location"]
+
+We're on our way! Call if you need anything: [Your Phone]
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click <strong>"Continue"</strong>, then <strong>"Test step"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>2-hour reminder configured and tested</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">21</div>
+                <div class="step-title">Publish Appointment Reminder Zap</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Rename Zap: <strong>Appointment Reminders</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click <strong>"Publish"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Appointment Reminder Zap published</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(5)">✅ AUTOMATION 2 COMPLETE!</button>
+    </div>
+
+    <!-- AUTOMATION 3: AI QUOTE GENERATOR -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">BONUS - SAME DAY</div>
+                <div>🤖 Part 6: AI-Powered Quote Generator</div>
+            </div>
+            <div class="section-time">⏱️ 1 hour</div>
+        </div>
+
+        <div class="tip" style="margin-bottom: 12px;">
+            💡 <strong>What we're building:</strong> Customer texts you asking for price → AI analyzes and generates quote → Auto-sends via SMS
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">22</div>
+                <div class="step-title">Create AI Quote Zap</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Create new Zap
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Trigger: Search <strong>Twilio</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Event: Select <strong>"New Incoming Message"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Account: Select your Twilio account
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="important">
+                    📌 <strong>Test the trigger:</strong> Send a text to your Twilio number NOW
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> From your phone, text your Twilio number:
+                </div>
+                <div class="input-example">
+                    "How much to fix a leaky faucet in kitchen?"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> In Zapier, click <strong>"Test trigger"</strong>
+                </div>
+                <div class="screenshot-placeholder">
+                    Should show your test message
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click <strong>"Continue with selected record"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Incoming SMS trigger working</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">23</div>
+                <div class="step-title">Add Filter (Only Quote Requests)</div>
+            </div>
+            <div class="step-content">
+                <div class="important">
+                    📌 We only want AI to respond to price questions, not every text
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click ➕ to add action
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Search: <strong>Filter by Zapier</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click "Filter by Zapier"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Set up filter rules:
+                </div>
+                <div class="input-example">
+                    Field 1: Click dropdown → Select "1. Body" (the message text)<br>
+                    Condition: (Text) Contains<br>
+                    Value: quote
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Click <strong>"OR"</strong> to add another condition
+                </div>
+                <div class="input-example">
+                    Field 2: Select "1. Body"<br>
+                    Condition: (Text) Contains<br>
+                    Value: price
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click <strong>"OR"</strong> again
+                </div>
+                <div class="input-example">
+                    Field 3: Select "1. Body"<br>
+                    Condition: (Text) Contains<br>
+                    Value: cost
+                </div>
+                <div class="tip">
+                    💡 Zap will only continue if message contains "quote" OR "price" OR "cost"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Click <strong>"Test step"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Filter configured for quote keywords</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">24</div>
+                <div class="step-title">Add OpenAI to Generate Quote</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click ➕ to add action
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Search: <strong>OpenAI</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click "OpenAI (ChatGPT)"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Event: Select <strong>"Send Prompt"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Account: Select your OpenAI account
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="important">
+                    📌 <strong>Configure AI Settings:</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 8:</strong> Fill in these fields:
+                </div>
+                <div class="input-example">
+Model: gpt-4o-mini (cheapest, fastest)<br>
+Max Tokens: 200<br>
+Temperature: 0.3 (more consistent pricing)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 9:</strong> Scroll to "User Message" field - THIS IS CRITICAL
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 10:</strong> Copy and paste this EXACT prompt:
+                </div>
+                <div class="code-block">
+You are a professional plumber providing pricing estimates via text message.
+
+Customer inquiry: [Click here and insert "1. Body"]
+
+Based on the customer's description, provide:
+1. Service name
+2. Price range (give realistic plumbing prices)
+3. Brief explanation
+4. Keep response under 160 characters for SMS
+
+Format exactly like this:
+"[Service Name]: $[LOW]-$[HIGH]. [Brief reason]. Call to schedule: [YOUR PHONE]"
+
+Example: "Faucet repair: $150-$250. Includes parts & labor. Call to schedule: 555-0123"
+
+Be professional, friendly, and concise.
+                </div>
+                <div class="warning">
+                    ⚠️ Replace [YOUR PHONE] with your actual business phone number!
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 11:</strong> Where it says [Click here and insert "1. Body"], click that spot
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 12:</strong> From dropdown, select <strong>"1. Body"</strong> (the customer's message)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 13:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 14:</strong> Click <strong>"Test step"</strong>
+                </div>
+                <div class="screenshot-placeholder">
+                    AI should generate a quote based on your test message!
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>OpenAI quote generator tested successfully</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">25</div>
+                <div class="step-title">Send AI Quote via SMS</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click ➕ to add action
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Add Twilio → Send SMS
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Configure:
+                </div>
+                <div class="input-example">
+From Number: [Your Twilio number]<br>
+To: Click dropdown → Select "1. From" (customer's phone)<br>
+Message: Click dropdown → Select "3. Response" (AI's quote)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click <strong>"Continue"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Click <strong>"Test step"</strong>
+                </div>
+                <div class="important">
+                    📌 You should receive the AI-generated quote via SMS!
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Received AI quote via SMS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">26</div>
+                <div class="step-title">Log Quote in Google Sheets</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Click ➕ to add action
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Add Google Sheets → Create Row
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Select your "Plumber Leads CRM" spreadsheet
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Map fields:
+                </div>
+                <div class="input-example">
+Lead Name: Type "Quote Request"<br>
+Phone: Select "1. From"<br>
+Service Type: Type "Quote via SMS"<br>
+Date Added: Select "Timestamp"<br>
+Status: Type "Quote Sent"<br>
+Notes: Select "3. Response" (the AI quote you sent)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Test and publish
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Quote logging configured</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">27</div>
+                <div class="step-title">Publish AI Quote Zap</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Rename: <strong>AI Quote Generator</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click <strong>"Publish"</strong>
+                </div>
+                <div class="important">
+                    🎉 Test it live: Text your Twilio number "How much to install water heater?" and watch AI respond!
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>AI Quote Generator published and tested</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(6)">🤖 AI AUTOMATION COMPLETE!</button>
+    </div>
+
+    <!-- AUTOMATION 4: FOLLOW-UP SEQUENCE -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">BONUS - SAME DAY</div>
+                <div>🔄 Part 7: Automated Follow-up Sequence</div>
+            </div>
+            <div class="section-time">⏱️ 45 minutes</div>
+        </div>
+
+        <div class="tip" style="margin-bottom: 12px;">
+            💡 <strong>What we're building:</strong> Quote sent → Wait 2 days → Follow-up SMS → Wait 3 more days → Final offer SMS
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">28</div>
+                <div class="step-title">Update Google Sheet for Follow-ups</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open your "Plumber Leads CRM" Google Sheet
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Add new column header in cell I1: <strong>Follow-up Status</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> In any row where Status = "Quote Sent", add to column I: <strong>Pending</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Added Follow-up Status column</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">29</div>
+                <div class="step-title">Create Follow-up Zap</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Create new Zap
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Trigger: <strong>Google Sheets</strong> → <strong>"New or Updated Row"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Select your CRM spreadsheet
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Trigger column: Select <strong>"Status"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Test trigger (use a row with Status = "Quote Sent")
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Sheet trigger configured</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">30</div>
+                <div class="step-title">Add Filter for "Quote Sent" Status</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Add Filter by Zapier
+                </div>
+                <div class="input-example">
+Field: Select "Status"<br>
+Condition: (Text) Exactly matches<br>
+Value: Quote Sent
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Test filter
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Filter configured</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">31</div>
+                <div class="step-title">Add 2-Day Delay</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Add <strong>Delay by Zapier</strong> → <strong>"Delay For"</strong>
+                </div>
+                <div class="input-example">
+Delay For: 2<br>
+Time Unit: Days
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click Continue
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>2-day delay added</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">32</div>
+                <div class="step-title">Send Day-2 Follow-up SMS</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Add Twilio SMS action
+                </div>
+                <div class="input-example">
+From: [Your Twilio number]<br>
+To: Select "Phone" field<br>
+Message:
+
+Hi [Select "Lead Name"]! 
+
+Following up on the [Select "Service Type"] quote we sent on [Select "Date Added"].
+
+Any questions? We're here to help!
+
+Ready to schedule? Reply YES or call [Your Phone]
+
+- [Your Name]
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Test step
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Day-2 follow-up configured</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">33</div>
+                <div class="step-title">Add 3 More Days + Final Offer</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Add another Delay → 3 days
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Add Twilio SMS:
+                </div>
+                <div class="input-example">
+Message:
+
+[Select "Lead Name"], we'd love to earn your business!
+
+Book by this Friday and get 10% off your [Select "Service Type"].
+
+Limited time offer - call now: [Your Phone]
+
+Or schedule online: [Your booking link]
+
+Thanks!
+[Your Business Name]
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Test and publish
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Rename: <strong>Follow-up Sequence</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Follow-up sequence published</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(7)">🔄 ALL 4 AUTOMATIONS COMPLETE!</button>
+    </div>
+
+    <!-- LEGAL COMPLIANCE -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">CRITICAL - BEFORE GOING LIVE</div>
+                <div>⚖️ Part 8: Legal Compliance Setup</div>
+            </div>
+            <div class="section-time">⏱️ 30 minutes</div>
+        </div>
+
+        <div class="warning" style="margin-bottom: 12px;">
+            ⚠️ <strong>TCPA Law:</strong> Required by federal law to avoid $500-$1,500 fines PER TEXT. Not optional!
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">34</div>
+                <div class="step-title">Add Consent to Google Form</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open your Google Form
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click ➕ to add new question
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Question type: <strong>"Checkboxes"</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Question text (copy exactly):
+                </div>
+                <div class="code-block">
+SMS Consent (Required)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Option 1 text (copy exactly):
+                </div>
+                <div class="code-block">
+I consent to receive automated text messages from [Your Business Name] at the phone number provided. Message frequency varies. Message and data rates may apply. Reply STOP to opt-out anytime.
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Toggle <strong>"Required"</strong> ON
+                </div>
+                <div class="important">
+                    📌 Now users MUST check this box to submit the form
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Consent checkbox added to form</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">35</div>
+                <div class="step-title">Create Auto-Reply for "STOP"</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Create new Zap
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Trigger: Twilio → New Incoming Message
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Add Filter:
+                </div>
+                <div class="input-example">
+Field: Body<br>
+Condition: (Text) Contains<br>
+Value: STOP
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Add Twilio SMS action:
+                </div>
+                <div class="input-example">
+From: [Your Twilio number]<br>
+To: [Select "From" - customer's number]<br>
+Message:
+
+You've been unsubscribed from [Your Business Name] text messages. You will not receive further automated texts.
+
+To resubscribe or for service, call [Your Phone].
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Add Google Sheets action → Update Row
+                </div>
+                <div class="input-example">
+Search by: Phone number<br>
+Phone: [Select "From"]<br>
+Update Status to: "Opted Out"
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Publish Zap: <strong>"STOP Keyword Handler"</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>STOP auto-reply configured</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">36</div>
+                <div class="step-title">Test STOP Function</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> From your phone, text your Twilio number: <strong>STOP</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> You should receive unsubscribe confirmation within 30 seconds
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Check your Google Sheet - Status should update to "Opted Out"
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>STOP function tested and working</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(8)">✅ LEGALLY COMPLIANT!</button>
+    </div>
+
+    <!-- DAILY OPERATIONS -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">ONGOING</div>
+                <div>📊 Part 9: Daily/Weekly Operations Guide</div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">37</div>
+                <div class="step-title">Daily Check (5 minutes every morning)</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open Zapier dashboard
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click <strong>"Zap History"</strong> (left menu)
+                </div>
+                <div class="screenshot-placeholder">
+                    Shows all Zaps that ran in last 24 hours
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Look for red ❌ error icons
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> If you see errors, click to see details
+                </div>
+                <div class="important">
+                    📌 <strong>Common errors and fixes:</strong>
+                </div>
+                <div class="code-block">
+Error: "Phone number invalid"
+Fix: Customer entered wrong format. Manually text them.
+
+Error: "OpenAI rate limit"
+Fix: You hit API limit. Wait 1 hour or upgrade OpenAI plan.
+
+Error: "No data found"
+Fix: Trigger didn't find new data. This is normal if no activity.
+
+Error: "Authentication failed"
+Fix: Reconnect the app in Zapier → Apps → Reconnect
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>I know how to check Zap History daily</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">38</div>
+                <div class="step-title">Weekly Maintenance (15 minutes every Sunday)</div>
+            </div>
+            <div class="step-content">
+                <div class="important">
+                    📌 <strong>Weekly Checklist:</strong>
+                </div>
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Check Twilio balance - add $20 if below $10</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Review Google Sheet - update old lead statuses</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Check OpenAI usage - verify costs are reasonable</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Test one Zap by submitting form yourself</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Review any customer STOP requests</span>
+                    </div>
+                </div>
+
+                <div class="click-instruction">
+                    <strong>How to check Twilio balance:</strong>
+                </div>
+                <div class="click-instruction">
+                    → Go to Twilio Console<br>
+                    → Top-right shows balance<br>
+                    → Click "Add Funds" if needed
+                </div>
+
+                <div class="click-instruction">
+                    <strong>How to check OpenAI usage:</strong>
+                </div>
+                <div class="click-instruction">
+                    → Go to platform.openai.com<br>
+                    → Click Settings → Billing → Usage<br>
+                    → Shows $ spent this month
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">39</div>
+                <div class="step-title">Monthly Review (30 minutes - 1st of month)</div>
+            </div>
+            <div class="step-content">
+                <div class="important">
+                    📌 <strong>Calculate your ROI:</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open Google Sheet
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Count leads by status:
+                </div>
+                <div class="code-block">
+Total Leads: =COUNTA(A:A)-1
+New Leads: =COUNTIF(F:F,"New Lead")
+Quotes Sent: =COUNTIF(F:F,"Quote Sent")
+Booked Jobs: =COUNTIF(F:F,"Booked")
+Conversion Rate: =Booked/Total Leads
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Review costs:
+                </div>
+                <div class="input-example">
+Zapier: $20/mo<br>
+Twilio: $15 + usage (check invoice)<br>
+OpenAI: Check billing dashboard<br>
+Total: Add them up
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Compare to value:
+                </div>
+                <div class="code-block">
+If you booked 10 jobs @ $200 average = $2,000 revenue
+Cost: ~$60/month
+ROI: 3,333% (worth it!)
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">40</div>
+                <div class="step-title">When to Upgrade Zapier</div>
+            </div>
+            <div class="step-content">
+                <div class="important">
+                    📌 <strong>Free Plan Limits:</strong>
+                </div>
+                <div class="code-block">
+100 tasks/month
+Single-step Zaps only
+                </div>
+                <div class="warning">
+                    ⚠️ <strong>You WILL hit this limit!</strong> Each form submission uses 3 tasks (trigger + sheet + SMS)
+                </div>
+                <div class="click-instruction">
+                    <strong>When to upgrade to Starter ($20/mo):</strong>
+                </div>
+                <div class="input-example">
+✅ When you get 30+ leads/month<br>
+✅ When you see "Task limit reached" error<br>
+✅ Before launching to real customers
+                </div>
+                <div class="click-instruction">
+                    <strong>How to upgrade:</strong>
+                </div>
+                <div class="click-instruction">
+                    → Zapier dashboard<br>
+                    → Click "Upgrade" (top-right)<br>
+                    → Choose "Starter" ($19.99/mo)<br>
+                    → Enter payment info<br>
+                    → Done!
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>I understand when to upgrade Zapier</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(9)">📊 OPERATIONS GUIDE COMPLETE!</button>
+    </div>
+
+    <!-- WEBSITE INTEGRATION -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">BONUS</div>
+                <div>🌐 Part 10: Add Form to Your Website</div>
+            </div>
+            <div class="section-time">⏱️ 15 minutes</div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">41</div>
+                <div class="step-title">Get Embed Code</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Open your Google Form
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Click <strong>"Send"</strong> button (top-right)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click <strong>embed icon</strong> (looks like < >)
+                </div>
+                <div class="screenshot-placeholder">
+                    Shows HTML code in a box
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Click <strong>"Copy"</strong>
+                </div>
+                <div class="important">
+                    📌 This code can be pasted into ANY website
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">42</div>
+                <div class="step-title">Add to Website (WordPress example)</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Log into WordPress admin
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Go to Pages → Add New (or edit existing Contact page)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> Click ➕ to add block
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 4:</strong> Search for "Custom HTML" block
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 5:</strong> Paste the Google Form embed code
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 6:</strong> Click <strong>"Preview"</strong> to see it
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 7:</strong> Click <strong>"Publish"</strong>
+                </div>
+
+                <div class="tip">
+                    💡 <strong>Don't have WordPress?</strong> Same concept for:<br>
+                    • Wix: Add "Embed Code" element<br>
+                    • Squarespace: Add "Code" block<br>
+                    • Shopify: Add "Custom Liquid" section
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">43</div>
+                <div class="step-title">Alternative: Use Direct Link</div>
+            </div>
+            <div class="step-content">
+                <div class="click-instruction">
+                    <strong>If you can't embed code:</strong>
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 1:</strong> Get your form's direct link (from Send → Link icon)
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 2:</strong> Add a button on your website
+                </div>
+                <div class="input-example">
+Button text: "Request Service"<br>
+Link to: [Your Google Form URL]
+                </div>
+                <div class="click-instruction">
+                    <strong>STEP 3:</strong> When clicked, opens form in new tab
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>Form accessible from my website</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="action-btn complete" onclick="saveProgress(10)">🌐 WEBSITE INTEGRATION COMPLETE!</button>
+    </div>
+
+    <!-- COPY-PASTE TEMPLATES -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="day-label">📋 BONUS RESOURCES</div>
+                <div>📝 Copy-Paste Templates Library</div>
+            </div>
+        </div>
+
+        <div class="important" style="margin-bottom: 12px; text-align: center;">
+            🎯 <strong>Save Time!</strong> Copy these proven templates instead of writing from scratch.<br>
+            Just replace [YOUR BUSINESS NAME], [YOUR NAME], and [YOUR PHONE] with your info.
+        </div>
+
+        <!-- SMS TEMPLATES -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">📱</div>
+                <div class="step-title">SMS Message Templates</div>
+            </div>
+            <div class="step-content">
+                
+                <div class="important">
+                    💡 <strong>Template 1: Initial Lead Response (Emergency)</strong>
+                </div>
+                <div class="code-block" style="cursor: pointer;" title="Click to select all, then Ctrl+C to copy">
+🚨 EMERGENCY RESPONSE 🚨
+
+Hi [Name]! We got your emergency request for [Service Type].
+
+A technician will call you within 15 minutes.
+
+For immediate help: [YOUR PHONE]
+
+- [YOUR BUSINESS NAME]
+                </div>
+                <div class="tip">Click code block to select, then Ctrl+C (Windows) or Cmd+C (Mac) to copy</div>
+
+                <div class="important" style="margin-top: 20px;">
+                    💡 <strong>Template 2: Initial Lead Response (Standard)</strong>
+                </div>
+                <div class="code-block" style="cursor: pointer;" title="Click to select all">
+Hi [Name]! 👋
+
+Thanks for contacting [YOUR BUSINESS NAME]. We received your request for [Service Type].
+
+We'll call you within 30 minutes to discuss your project.
+
+Need us sooner? Call: [YOUR PHONE]
+
+- [YOUR NAME]
+                </div>
+
+                <div class="important" style="margin-top: 20px;">
+                    💡 <strong>Template 3: Quote Follow-up (Day 2)</strong>
+                </div>
+                <div class="code-block" style="cursor: pointer;">
+Hi [Name]! 
+
+Following up on the [Service Type] quote we sent on [Date].
+
+Any questions? We're here to help! Just reply to this message or call [YOUR PHONE].
+
+Ready to schedule? Reply YES
+
+- [YOUR NAME]
+[YOUR BUSINESS NAME]
+                </div>
+
+                <div class="important" style="margin-top: 20px;">
+                    💡 <strong>Template 4: Final Offer (Day 5)</strong>
+                </div>
+                <div class="code-block" style="cursor: pointer;">
+[Name], we'd love to earn your business! 🛠️
+
+Book by Friday and get 10% off your [Service Type].
+
+Limited time offer!
+
+Schedule now: [YOUR PHONE]
+Or book online: [Your Website Link]
+
+Thanks!
+[YOUR BUSINESS NAME]
+                </div>
+
+                <div class="important" style="margin-top: 20px;">
+                    💡 <strong>Template 5: Appointment Reminder (24 hours)</strong>
+                </div>
+                <div class="code-block" style="cursor: pointer;">
+⏰ Reminder: [YOUR BUSINESS NAME] appointment tomorrow!
+
+📅 Date: [Date]
+🕐 Time: [Time]
+📍 Location: [Address]
+
+Reply YES to confirm or CANCEL to reschedule.
+
+See you soon!
+- [YOUR NAME]
+[YOUR PHONE]
+                </div>
+
+                <div class="important" style="margin-top: 20px;">
+                    💡 <strong>Template 6: Review Request (After Job)</strong>
+                </div>
+                <div class="code-block" style="cursor: pointer;">
+Hi [Name]! ⭐
+
+Thanks for choosing [YOUR BUSINESS NAME]! We hope you're happy with the work.
+
+Would you mind leaving us a quick review? It helps our small business grow!
+
+Leave review: [Google Review Link]
+
+Thanks again!
+- [YOUR NAME]
+                </div>
+
+            </div>
+        </div>
+
+        <!-- AI PROMPT TEMPLATES -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">🤖</div>
+                <div class="step-title">AI Prompt Templates (OpenAI)</div>
+            </div>
+            <div class="step-content">
+                
+                <div class="important">
+                    💡 <strong>AI Prompt 1: Quote Generator (Basic)</strong>
+                </div>
+                <div class="code-block" style="cursor: pointer;">
+You are a professional plumber providing price estimates via text message.
+
+Customer inquiry: [Insert Zapier field: Body]
+
+Provide a quote with:
+1. Service name
+2. Price range (realistic plumbing prices for your area)
+3. Brief explanation (1 sentence)
+
+Keep response under 160 characters for SMS.
+
+Format: "[Service]: $[LOW]-$[HIGH]. [Reason]. Call: [YOUR PHONE]"
+
+Example: "Faucet repair: $150-$250. Includes parts & labor. Call: 555-0123"
+
+Be professional and helpful.
+                </div>
+
+                <div class="important" style="margin-top: 20px;">
+                    💡 <strong>AI Prompt 2: Quote Generator (Advanced with Pricing)</strong>
+                </div>
+                <div class="code-block" style="cursor: pointer;">
+You are an expert plumber providing accurate pricing estimates.
+
+Customer inquiry: [Insert Zapier field: Body]
+
+**PRICING GUIDE** (use these as reference):
+- Faucet repair: $150-$300
+- Toilet repair: $150-$400
+- Drain cleaning: $150-$500
+- Water heater install: $1,200-$3,500
+- Pipe leak repair: $200-$1,000
+- Emergency service: Add $150-$300 surcharge
+- Sewer line repair: $2,500-$10,000
+
+Based on the description, provide:
+1. Service name
+2. Price range from guide
+3. One-sentence explanation
+
+Format for SMS (under 160 chars):
+"[Service]: $[LOW]-$[HIGH]. [Brief reason]. Call: [YOUR PHONE]"
+
+If unclear, give range and mention inspection needed.
+                </div>
+
+                <div class="important" style="margin-top: 20px;">
+                    💡 <strong>AI Prompt 3: Smart Response Router</strong>
+                </div>
+                <div class="code-block" style="cursor: pointer;">
+You are customer service for [YOUR BUSINESS NAME], a plumbing company.
+
+Customer message: [Insert Zapier field: Body]
+
+Analyze and respond appropriately:
+
+**IF asking for price/quote:**
+"[Service]: $[Range]. Call for details: [YOUR PHONE]"
+
+**IF asking about availability:**
+"We have openings this week! What day works? Call [YOUR PHONE]"
+
+**IF emergency (burst pipe, flooding):**
+"🚨 EMERGENCY - Call NOW: [YOUR PHONE]. Technician within 30 min."
+
+**IF general question:**
+Answer briefly, offer to help further.
+
+Keep ALL responses under 160 characters. Be friendly.
+                </div>
+
+            </div>
+        </div>
+
+        <!-- GOOGLE FORM TEMPLATE -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">📋</div>
+                <div class="step-title">Google Form - Complete Setup</div>
+            </div>
+            <div class="step-content">
+                
+                <div class="code-block" style="cursor: pointer; height: 400px; overflow-y: auto;">
+QUESTION 1:
+Type: Short answer
+Text: "Your Name"
+Required: YES
+
+QUESTION 2:
+Type: Short answer
+Text: "Your Phone Number"
+Description: "Format: 555-123-4567"
+Required: YES
+
+QUESTION 3:
+Type: Short answer
+Text: "Your Email (optional)"
+Required: NO
+
+QUESTION 4:
+Type: Multiple choice
+Text: "What service do you need?"
+Options:
+• Emergency Repair (within 2 hours)
+• Leak Repair
+• Drain Cleaning
+• Toilet Repair
+• Faucet/Sink Repair
+• Water Heater Service
+• Installation (new fixture)
+• Inspection/Maintenance
+• Other
+Required: YES
+
+QUESTION 5:
+Type: Paragraph
+Text: "Describe the issue"
+Required: NO
+
+QUESTION 6:
+Type: Short answer
+Text: "Preferred Date/Time (optional)"
+Required: NO
+
+QUESTION 7:
+Type: Multiple choice
+Text: "How did you hear about us?"
+Options:
+• Google Search
+• Facebook/Social Media
+• Friend/Family Referral
+• Yelp/Review Site
+• Returning Customer
+• Other
+Required: NO
+
+QUESTION 8 (LEGAL - REQUIRED):
+Type: Checkboxes
+Text: "SMS Consent (Required)"
+Options:
+• I consent to receive automated text messages from [YOUR BUSINESS NAME] at the phone number provided. Message frequency varies. Message and data rates may apply. Reply STOP to opt-out anytime.
+Required: YES
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PERSONALIZATION CHECKLIST -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">✏️</div>
+                <div class="step-title">Personalization Checklist</div>
+            </div>
+            <div class="step-content">
+                
+                <div class="important">
+                    🎯 <strong>Replace these placeholders EVERYWHERE before going live:</strong>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>[YOUR BUSINESS NAME] → Replace with actual business name</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>[YOUR NAME] → Your first name</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>[YOUR PHONE] → Business phone: 555-123-4567</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>[YOUR EMAIL] → Business email</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>[YOUR WEBSITE] → Website URL</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>[Google Review Link] → Google Business review URL</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox"></div>
+                        <span>[Payment Link] → Stripe/PayPal/Square link</span>
+                    </div>
+                </div>
+
+                <div class="tip" style="margin-top: 16px;">
+                    💡 <strong>Quick Replace Method:</strong><br>
+                    In each Zap → Click any text field → Press Ctrl+H (Windows) or Cmd+Option+F (Mac)<br>
+                    Find: [YOUR BUSINESS NAME]<br>
+                    Replace with: Joe's Plumbing<br>
+                    Replace All
+                </div>
+
+            </div>
+        </div>
+
+        <div class="important" style="text-align: center; padding: 20px; margin-top: 12px;">
+            🎉 <strong>All Templates Ready to Use!</strong><br>
+            Click any code block to select it, then Ctrl+C to copy.<br>
+            Paste into Zapier, Google Forms, or wherever needed.<br>
+            <span style="font-size: 12px; color: #94a3b8;">Don't forget to replace all [PLACEHOLDERS]!</span>
+        </div>
+
+    </div>
+
+    <!-- FINAL COMPLETION -->
+
+    <!-- FINAL COMPLETION -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">🎉 CONGRATULATIONS - YOU'RE DONE!</div>
+        </div>
+
+        <div class="step-content" style="margin-left: 0;">
+            <div class="important" style="font-size: 14px; text-align: center; padding: 20px;">
+                🎊 <strong>YOU NOW HAVE A COMPLETE AI AUTOMATION SYSTEM!</strong> 🎊
+            </div>
+
+            <div class="tip" style="margin: 20px 0;">
+                <strong>What you built:</strong>
+                <ul style="margin: 10px 0 10px 20px;">
+                    <li>✅ Automation 1: Instant lead response (form → SMS + CRM)</li>
+                    <li>✅ Automation 2: Appointment reminders (24hr + 2hr before)</li>
+                    <li>✅ Automation 3: AI-powered quote generator</li>
+                    <li>✅ Automation 4: Multi-day follow-up sequences</li>
+                    <li>✅ Legal compliance (STOP handler + consent)</li>
+                    <li>✅ Website integration ready</li>
+                    <li>✅ Operations & maintenance plan</li>
+                </ul>
+            </div>
+
+            <div class="important">
+                📊 <strong>Expected Results (based on typical plumbing businesses):</strong>
+                <ul style="margin: 10px 0 10px 20px;">
+                    <li>Response time: <strong>Under 2 minutes</strong> (was 2-4 hours)</li>
+                    <li>Lead conversion: <strong>+30-40%</strong> improvement</li>
+                    <li>No-shows: <strong>-50%</strong> reduction</li>
+                    <li>Time saved: <strong>10-15 hours/week</strong></li>
+                    <li>Cost: <strong>$50-150/month</strong></li>
+                    <li>ROI: <strong>1,000%+</strong> in most cases</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                ⚠️ <strong>Before going 100% live:</strong>
+                <ol style="margin: 10px 0 10px 20px;">
+                    <li>Test with 5-10 friends/family first</li>
+                    <li>Monitor Zap History daily for first week</li>
+                    <li>Upgrade Zapier to Starter ($20/mo) when you hit 30+ leads</li>
+                    <li>Add $50 to Twilio account for SMS buffer</li>
+                    <li>Set calendar reminder for weekly maintenance check</li>
+                </ol>
+            </div>
+
+            <div class="tip">
+                💡 <strong>Next Level (Optional improvements):</strong>
+                <ul style="margin: 10px 0 10px 20px;">
+                    <li>Add review request automation (after job completion)</li>
+                    <li>Create seasonal maintenance campaign</li>
+                    <li>Set up voicemail → SMS transcription</li>
+                    <li>Build customer satisfaction survey flow</li>
+                    <li>Integrate with QuickBooks for invoicing</li>
+                </ul>
+            </div>
+
+            <div class="important" style="text-align: center; margin-top: 30px;">
+                <strong>🎓 You learned:</strong><br>
+                • How Zapier automation works<br>
+                • How to connect multiple apps<br>
+                • How to use AI (OpenAI) in workflows<br>
+                • Legal compliance for SMS marketing<br>
+                • Business process automation<br>
+                <br>
+                <strong>This skill is valuable beyond plumbing!</strong> You can now automate almost any business process.
+            </div>
+        </div>
+
+        <button class="action-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); margin-top: 20px;" onclick="alert('🎉 Save this guide! Press Ctrl+D (Windows) or Cmd+D (Mac) to bookmark.\n\nYou can always come back to review steps or troubleshoot issues.')">
+            💾 BOOKMARK THIS GUIDE FOR FUTURE REFERENCE
+        </button>
+
+        <button class="action-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            ⬆️ BACK TO TOP
+        </button>
+    </div>
+
+    <!-- FINAL CHECKLIST -->
+    <div class="section">
+        <div class="section-title">✅ MASTER CHECKLIST - Complete Setup Verification</div>
+        
+        <div style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">
+            Click each item as you complete it. Your progress is saved automatically.
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <div style="font-size: 13px; font-weight: 700; color: #60a5fa; margin-bottom: 8px;">PART 1: Account Setup</div>
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Zapier account created (free or paid)</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Twilio account created + phone number purchased ($15/mo)</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>OpenAI API key created + payment method added</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Google Sheet CRM created with all columns</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Google Form created with consent checkbox</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <div style="font-size: 13px; font-weight: 700; color: #60a5fa; margin-bottom: 8px;">PART 2: Zapier Connections</div>
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Twilio connected to Zapier</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>OpenAI connected to Zapier</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Google Sheets connected to Zapier</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Google Forms connected to Zapier</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Google Calendar connected to Zapier</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <div style="font-size: 13px; font-weight: 700; color: #60a5fa; margin-bottom: 8px;">PART 3: Automations Built</div>
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Automation 1: Lead Response (form → SMS + Sheet) - PUBLISHED</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Automation 2: Appointment Reminders (24hr + 2hr) - PUBLISHED</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Automation 3: AI Quote Generator - PUBLISHED</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Automation 4: Follow-up Sequence (Day 2 + Day 5) - PUBLISHED</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <div style="font-size: 13px; font-weight: 700; color: #60a5fa; margin-bottom: 8px;">PART 4: Legal Compliance</div>
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Consent checkbox added to Google Form</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>STOP keyword auto-reply Zap created and tested</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Tested STOP function - received unsubscribe confirmation</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <div style="font-size: 13px; font-weight: 700; color: #60a5fa; margin-bottom: 8px;">PART 5: Testing</div>
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Tested lead response with real form submission</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Tested appointment reminder with calendar event</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Tested AI quote by texting Twilio number</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Verified all data appears correctly in Google Sheet</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <div style="font-size: 13px; font-weight: 700; color: #60a5fa; margin-bottom: 8px;">PART 6: Go-Live Prep</div>
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Form added to website or link shared</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Upgraded Zapier to Starter plan ($20/mo) OR ready to upgrade at 100 tasks</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Added $30-50 buffer to Twilio account</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Set calendar reminder for weekly maintenance check</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>Bookmarked this guide for future reference</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 8px;">
+            <div style="font-size: 13px; font-weight: 700; color: #60a5fa; margin-bottom: 8px;">PART 7: Ongoing Operations</div>
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>I know how to check Zap History for errors</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>I know how to check Twilio and OpenAI usage/costs</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>I understand weekly and monthly maintenance tasks</span>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <span>System is LIVE and accepting real customers!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TROUBLESHOOTING REFERENCE -->
+    <div class="section">
+        <div class="section-title">🔧 Quick Troubleshooting Reference</div>
+        
+        <div class="trouble-box">
+            <div class="trouble-title">Problem: Zap not running at all</div>
+            <div class="trouble-solution">
+                ✅ Check if Zap is "On" (not paused)<br>
+                ✅ Verify trigger is correctly configured<br>
+                ✅ Check Zap History for errors<br>
+                ✅ Try turning Zap off and back on
+            </div>
+        </div>
+
+        <div class="trouble-box">
+            <div class="trouble-title">Problem: SMS not received</div>
+            <div class="trouble-solution">
+                ✅ Verify phone number format: +1-XXX-XXX-XXXX<br>
+                ✅ Check Twilio account balance (need credits)<br>
+                ✅ Check Twilio logs for delivery status<br>
+                ✅ Verify "From" number is your Twilio number
+            </div>
+        </div>
+
+        <div class="trouble-box">
+            <div class="trouble-title">Problem: Data not appearing in Google Sheet</div>
+            <div class="trouble-solution">
+                ✅ Check you selected correct spreadsheet in Zap<br>
+                ✅ Verify column mapping is correct<br>
+                ✅ Look in Sheet's "Version history" for changes<br>
+                ✅ Reconnect Google Sheets in Zapier
+            </div>
+        </div>
+
+        <div class="trouble-box">
+            <div class="trouble-title">Problem: AI generating weird responses</div>
+            <div class="trouble-solution">
+                ✅ Check OpenAI prompt - may need adjustment<br>
+                ✅ Reduce "Temperature" setting (more consistent)<br>
+                ✅ Add more specific examples in prompt<br>
+                ✅ Increase "Max Tokens" if response is cut off
+            </div>
+        </div>
+
+        <div class="trouble-box">
+            <div class="trouble-title">Problem: Hit Zapier task limit</div>
+            <div class="trouble-solution">
+                ✅ Free plan = 100 tasks/month<br>
+                ✅ Upgrade to Starter ($20/mo) for 750 tasks<br>
+                ✅ Each Zap step counts as 1 task<br>
+                ✅ Dashboard shows current usage
+            </div>
+        </div>
+
+        <div class="trouble-box">
+            <div class="trouble-title">Problem: Connection failed errors</div>
+            <div class="trouble-solution">
+                ✅ Go to Zapier → Apps → Find the app<br>
+                ✅ Click "Reconnect"<br>
+                ✅ Sign in again and allow permissions<br>
+                ✅ Test Zap again after reconnecting
+            </div>
+        </div>
+    </div>
+
+    <div class="important" style="text-align: center; padding: 30px; margin-top: 20px; font-size: 16px;">
+        🎉 <strong>CONGRATULATIONS!</strong> 🎉<br><br>
+        You've completed the entire setup!<br>
+        Your plumbing business now runs on AI autopilot 24/7.<br><br>
+        <span style="font-size: 14px; color: #94a3b8;">
+            Questions? Issues? Review the relevant section above or check Troubleshooting Reference.
+        </span>
+    </div>
+
+    <script>
+        let completedSteps = 0;
+        const totalSteps = 43; // Updated from 14 to 43
+
+        function toggleCheck(element) {
+            const checkbox = element.querySelector('.checkbox');
+            if (checkbox.classList.contains('checked')) {
+                checkbox.classList.remove('checked');
+                checkbox.innerHTML = '';
+                completedSteps--;
+            } else {
+                checkbox.classList.add('checked');
+                checkbox.innerHTML = '✓';
+                completedSteps++;
+            }
+            updateProgress();
+            saveCheckboxStates();
+        }
+
+        function updateProgress() {
+            const progress = (completedSteps / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function saveProgress(section) {
+            alert('Great work! Progress saved. You completed section ' + section + ' of 10.');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function saveCheckboxStates() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const states = Array.from(checkboxes).map(cb => cb.classList.contains('checked'));
+            localStorage.setItem('plumberAutomationProgress', JSON.stringify(states));
+        }
+
+        // Click to select code blocks
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click-to-select for all code blocks
+            document.querySelectorAll('.code-block').forEach(function(block) {
+                block.addEventListener('click', function() {
+                    const range = document.createRange();
+                    range.selectNodeContents(this);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    
+                    // Show tooltip
+                    const tooltip = document.createElement('div');
+                    tooltip.textContent = '✓ Selected! Press Ctrl+C to copy';
+                    tooltip.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; z-index: 10000; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);';
+                    document.body.appendChild(tooltip);
+                    
+                    setTimeout(() => {
+                        tooltip.remove();
+                    }, 2000);
+                });
+            });
+
+            // Restore checkbox states
+            const saved = localStorage.getItem('plumberAutomationProgress');
+            if (saved) {
+                const checkboxes = document.querySelectorAll('.checkbox');
+                const states = JSON.parse(saved);
+                states.forEach((isChecked, index) => {
+                    if (isChecked && checkboxes[index]) {
+                        checkboxes[index].classList.add('checked');
+                        checkboxes[index].innerHTML = '✓';
+                        completedSteps++;
+                    }
+                });
+                updateProgress();
+            }
+        });
+    </script>
+</body>
+</html>
